@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 
 st.set_page_config(
     page_title="Zyan Studio | Calculator Suite",
@@ -7,178 +8,202 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Robust Multi-Device Layout Lock & Premium UI Engine
+# Initialize Session State values safely
+if 'expr' not in st.session_state:
+    st.session_state.expr = ""
+
+# Handle direct actions from the custom HTML template buttons
+query_params = st.query_transform(st.experimental_get_query_params() if hasattr(st, 'experimental_get_query_params') else {})
+# Safe backward-compatible alternative for newer Streamlit query parameter fetches
+try:
+    current_params = st.query_params
+    if "action" in current_params:
+        clicked_val = current_params["action"]
+        if clicked_val == "C":
+            st.session_state.expr = ""
+        elif clicked_val == "=":
+            if st.session_state.expr:
+                try:
+                    st.session_state.expr = str(round(eval(st.session_state.expr), 4))
+                except ZeroDivisionError:
+                    st.session_state.expr = "Cannot divide by 0"
+                except Exception:
+                    st.session_state.expr = "Error"
+        else:
+            # Map clean visual signs back to execution variables
+            mapped_val = clicked_val.replace("×", "*").replace("÷", "/")
+            st.session_state.expr += mapped_val
+        
+        # Clear query state parameters instantly to prevent endless loop triggers on page reloads
+        st.query_params.clear()
+        st.rerun()
+except Exception:
+    pass
+
+# Custom CSS Injection to lock down App View wrapper margins
 st.markdown("""
     <style>
-    /* Force completely dark core background */
     [data-testid="stAppViewContainer"], .main {
         background-color: #0d0f14 !important;
     }
-    
-    /* 🚨 ABSOLUTE MOBILE GRID LOCK - Stops ALL vertical stacking on phones */
-    div[data-testid="stHorizontalBlock"], 
-    .stHorizontalBlock, 
-    [data-testid="column"] {
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        gap: 6px !important;
-        width: 100% !important;
-    }
-    
-    /* Ensure individual columns behave like standard grid cells */
-    div[data-testid="stHorizontalBlock"] > div,
-    .stHorizontalBlock > div {
-        flex: 1 1 0% !important;
-        min-width: 0 !important;
-    }
-
-    /* Calculator Premium Floating Container */
-    .calc-card-wrapper {
-        max-width: 360px;
-        margin: 0 auto;
-        padding: 18px;
-        background: #151922;
-        border-radius: 20px;
-        border: 1px solid #222936;
-        box-shadow: 0px 10px 35px rgba(0, 0, 0, 0.6);
-    }
-    
-    /* High-Definition Input Screen Panel */
-    .stTextInput>div>div>input {
-        font-size: 38px !important;
-        text-align: right !important;
-        font-family: monospace !important;
-        background-color: #090b0f !important;
-        color: #ffffff !important;
-        border: 1px solid #222936 !important;
-        border-radius: 12px !important;
-        padding: 16px !important;
-        letter-spacing: 1px;
-    }
-
-    /* Minimalist Button Matrix Logic */
-    .stButton>button {
-        width: 100% !important;
-        height: 52px !important;
-        border-radius: 12px !important;
-        font-size: 20px !important;
-        font-weight: 600 !important;
-        background-color: #1e2430 !important;
-        color: #e2e8f0 !important;
-        border: none !important;
-        transition: all 0.1s ease-in-out !important;
-    }
-
-    /* Active Tap Feedback Interaction States */
-    .stButton>button:hover {
-        background-color: #293142 !important;
-        color: #ffffff !important;
-    }
-    
-    .stButton>button:active {
-        transform: scale(0.96);
-    }
-
-    /* Modern Blue Accent for Core Operators */
-    div.operator-btn button {
-        background-color: #3b82f6 !important;
-        color: #ffffff !important;
-    }
-    div.operator-btn button:hover { background-color: #2563eb !important; }
-
-    /* Neutral Slate Accent for Utilities */
-    div.utility-btn button {
-        background-color: #2d3748 !important;
-        color: #cbd5e1 !important;
-    }
-    div.utility-btn button:hover { background-color: #4a5568 !important; }
-    
-    /* Clean up default Streamlit headers padding */
     [data-testid="stHeader"] { background: transparent !important; }
+    /* Hide native container paddings so our app sits perfect */
+    .block-container { padding-top: 2rem !important; padding-bottom: 0rem !important; }
     </style>
 """, unsafe_allow_html=True)
 
 st.sidebar.markdown("# ⚙️ Main Menu")
 st.sidebar.markdown("---")
 
-# Render Outer Container Card
-st.markdown('<div class="calc-card-wrapper">', unsafe_allow_html=True)
+# Display fallback standard tracking representation safely
+display_value = st.session_state.expr if st.session_state.expr else "0"
 
-st.markdown("<h3 style='text-align: center; color: #ffffff; margin-bottom: 2px; font-family: sans-serif;'>Smart Calculator</h3>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #64748b; font-size: 12px; margin-bottom: 18px;'>Zyan Studio Premium Suite</p>", unsafe_allow_html=True)
+# Pure Native HTML & CSS Architecture Blueprint Grid Layout Matrix
+# This bypasses all reactive layouts and guarantees 1:1 scaling everywhere
+calculator_html = f"""
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<style>
+* {{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}}
+body {{
+    background-color: #0d0f14;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}}
+.calc-card-wrapper {{
+    width: 100%;
+    max-width: 350px;
+    background: #151922;
+    border-radius: 24px;
+    border: 1px solid #222936;
+    padding: 20px;
+    box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.6);
+}}
+.header-text {{
+    text-align: center;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}}
+.sub-text {{
+    text-align: center;
+    color: #64748b;
+    font-size: 11px;
+    margin-bottom: 18px;
+    letter-spacing: 0.5px;
+}}
+.display-screen {{
+    width: 100%;
+    height: 70px;
+    background-color: #090b0f;
+    border: 1px solid #222936;
+    border-radius: 14px;
+    color: #ffffff;
+    font-size: 34px;
+    text-align: right;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+    white-space: nowrap;
+    font-family: monospace;
+}}
+.grid-matrix {{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}}
+button {{
+    width: 100%;
+    height: 54px;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 600;
+    background-color: #1e2430;
+    color: #e2e8f0;
+    border: none;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-tap-highlight-color: transparent;
+}}
+button:active {{
+    transform: scale(0.95);
+    background-color: #293142;
+}}
+.btn-operator {{
+    background-color: #3b82f6;
+    color: #ffffff;
+}}
+.btn-operator:active {{
+    background-color: #2563eb;
+}}
+.btn-utility {{
+    background-color: #2d3748;
+    color: #cbd5e1;
+}}
+.btn-utility:active {{
+    background-color: #4a5568;
+}}
+</style>
+</head>
+<body>
 
-if 'expr' not in st.session_state:
-    st.session_state.expr = ""
+<div class="calc-card-wrapper">
+    <div class="header-text">Smart Calculator</div>
+    <div class="sub-text">Zyan Studio Premium Suite</div>
+    
+    <div class="display-screen">{display_value}</div>
+    
+    <div class="grid-matrix">
+        <button class="btn-utility" onclick="sendAction('C')">C</button>
+        <button class="btn-utility" onclick="sendAction('.')">.</button>
+        <button class="btn-utility" onclick="sendAction('%')">%</button>
+        <button class="btn-operator" onclick="sendAction('÷')">÷</button>
+        
+        <button onclick="sendAction('7')">7</button>
+        <button onclick="sendAction('8')">8</button>
+        <button onclick="sendAction('9')">9</button>
+        <button class="btn-operator" onclick="sendAction('×')">×</button>
+        
+        <button onclick="sendAction('4')">4</button>
+        <button onclick="sendAction('5')">5</button>
+        <button onclick="sendAction('6')">6</button>
+        <button class="btn-operator" onclick="sendAction('-')">-</button>
+        
+        <button onclick="sendAction('1')">1</button>
+        <button onclick="sendAction('2')">2</button>
+        <button onclick="sendAction('3')">3</button>
+        <button class="btn-operator" onclick="sendAction('+')">+</button>
+        
+        <button style="grid-column: span 2;" onclick="sendAction('0')">0</button>
+        <button style="grid-column: span 2;" class="btn-operator" onclick="sendAction('=')">=</button>
+    </div>
+</div>
 
-# Output Window
-st.text_input("Display", value=st.session_state.expr if st.session_state.expr else "0", disabled=True, label_visibility="collapsed")
-st.write("") 
+<script>
+function sendAction(value) {{
+    // Inject parameters directly back to parent frame window safely via search queries
+    const url = new URL(window.parent.location.href);
+    url.searchParams.set('action', value);
+    window.parent.location.href = url.toString();
+}}
+</script>
 
-# Strict Row Grid Setup
-row1 = st.columns(4)
-row2 = st.columns(4)
-row3 = st.columns(4)
-row4 = st.columns(4)
+</body>
+</html>
+"""
 
-# ROW 1
-with row1[0]:
-    if st.button("7", key="n7"): st.session_state.expr += "7"; st.rerun()
-with row1[1]:
-    if st.button("8", key="n8"): st.session_state.expr += "8"; st.rerun()
-with row1[2]:
-    if st.button("9", key="n9"): st.session_state.expr += "9"; st.rerun()
-with row1[3]:
-    st.markdown('<div class="operator-btn">', unsafe_allow_html=True)
-    if st.button("÷", key="op_div"): st.session_state.expr += "/"; st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# ROW 2
-with row2[0]:
-    if st.button("4", key="n4"): st.session_state.expr += "4"; st.rerun()
-with row2[1]:
-    if st.button("5", key="n5"): st.session_state.expr += "5"; st.rerun()
-with row2[2]:
-    if st.button("6", key="n6"): st.session_state.expr += "6"; st.rerun()
-with row2[3]:
-    st.markdown('<div class="operator-btn">', unsafe_allow_html=True)
-    if st.button("×", key="op_mul"): st.session_state.expr += "*"; st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# ROW 3
-with row3[0]:
-    if st.button("1", key="n1"): st.session_state.expr += "1"; st.rerun()
-with row3[1]:
-    if st.button("2", key="n2"): st.session_state.expr += "2"; st.rerun()
-with row3[2]:
-    if st.button("3", key="n3"): st.session_state.expr += "3"; st.rerun()
-with row3[3]:
-    st.markdown('<div class="operator-btn">', unsafe_allow_html=True)
-    if st.button("-", key="op_sub"): st.session_state.expr += "-"; st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# ROW 4 (Cleaned up Grid Structure without full-width blocks)
-with row4[0]:
-    st.markdown('<div class="utility-btn">', unsafe_allow_html=True)
-    if st.button("C", key="ut_clr"): st.session_state.expr = ""; st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
-with row4[1]:
-    if st.button("0", key="n0"): st.session_state.expr += "0"; st.rerun()
-with row4[2]:
-    st.markdown('<div class="operator-btn">', unsafe_allow_html=True)
-    if st.button("=", key="op_eq"):
-        if st.session_state.expr:
-            try:
-                st.session_state.expr = str(round(eval(st.session_state.expr), 4))
-            except ZeroDivisionError:
-                st.session_state.expr = "Cannot divide by 0"
-            except Exception:
-                st.session_state.expr = "Error"
-        st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
-with row4[3]:
-    st.markdown('<div class="operator-btn">', unsafe_allow_html=True)
-    if st.button("+", key="op_add"): st.session_state.expr += "+"; st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
-
-st.markdown('</div>', unsafe_allow_html=True)
+# Inject iframe element into Streamlit dashboard securely with static sizing bounds
+components.html(calculator_html, height=440, scrolling=False)
