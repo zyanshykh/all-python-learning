@@ -1,183 +1,263 @@
 import streamlit as st
+import streamlit.components.v1 as components
 
 st.set_page_config(
-    page_title="Zyan Studio | Calculator Suite",
+    page_title="Dev Hub | Modern Calculator Suite",
     page_icon="🧮",
     layout="centered",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"
 )
 
-# 🚨 MASTER COMPONENT RESPONSIVE OVERRIDE
-# Is CSS se Streamlit mobile par columns ko tod kar vertical line nahi bana payega
+# Global CSS context override to completely fix the layout container widths
 st.markdown("""
     <style>
-    /* Dark Premium Canvas Setup */
     [data-testid="stAppViewContainer"], .main {
         background-color: #0b0d12 !important;
     }
-    
-    /* Strict Column Control for ALL viewports (Mobile Lock) */
-    [data-testid="stHorizontalBlock"] {
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        gap: 8px !important;
-        width: 100% !important;
-    }
-    
-    [data-testid="column"] {
-        flex: 1 1 0% !important;
-        min-width: 0 !important;
-    }
-
-    /* Calculator Main Premium Card Frame */
-    .calc-box {
-        max-width: 360px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #131722;
-        border: 1px solid #1e2538;
-        border-radius: 24px;
-        box-shadow: 0px 15px 35px rgba(0,0,0,0.6);
-    }
-
-    /* Sleek Display screen */
-    .stTextInput>div>div>input {
-        font-size: 38px !important;
-        text-align: right !important;
-        font-family: monospace !important;
-        background-color: #07090d !important;
-        color: #ffffff !important;
-        border: 1px solid #1e2538 !important;
-        border-radius: 14px !important;
-        padding: 14px !important;
-    }
-
-    /* Premium Minimalist Keypad buttons */
-    .stButton>button {
-        width: 100% !important;
-        height: 54px !important;
-        border-radius: 14px !important;
-        font-size: 22px !important;
-        font-weight: 600 !important;
-        background-color: #1c2130 !important;
-        color: #f1f5f9 !important;
-        border: none !important;
-        transition: all 0.1s ease !important;
-    }
-
-    .stButton>button:hover {
-        background-color: #262d42 !important;
-        color: #ffffff !important;
-    }
-
-    .stButton>button:active {
-        transform: scale(0.95);
-    }
-
-    /* Operator & Utility Styles */
-    div.op-btn button { background-color: #2563eb !important; color: white !important; }
-    div.op-btn button:hover { background-color: #1d4ed8 !important; }
-    
-    div.util-btn button { background-color: #334155 !important; color: #cbd5e1 !important; }
-    div.util-btn button:hover { background-color: #475569 !important; }
-
     [data-testid="stHeader"] { background: transparent !important; }
-    .block-container { padding-top: 2rem !important; }
+    .block-container { 
+        padding-top: 1.5rem !important; 
+        max-width: 450px !important; 
+    }
+    iframe { 
+        border: none !important; 
+        margin: 0 auto !important; 
+        display: block !important; 
+    }
     </style>
 """, unsafe_allow_html=True)
 
-# Sidebar Menu Info
-st.sidebar.markdown("# ⚙️ Main Menu")
-st.sidebar.markdown("---")
+# Sandboxed Pure-HTML/JS Grid Matrix Layout Engine
+# Bypasses all reactive column drops completely across device viewports
+calculator_canvas = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    user-select: none;
+}
+body {
+    background-color: #0b0d12;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+.calc-container {
+    width: 100%;
+    max-width: 360px;
+    background-color: #121620;
+    border: 1px solid #1e2538;
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.5);
+}
+.brand-title {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+.brand-sub {
+    color: #4b5563;
+    font-size: 11px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+}
+.display-wrapper {
+    width: 100%;
+    background-color: #07090d;
+    border: 1px solid #1e2538;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    min-height: 85px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.history-display {
+    color: #4b5563;
+    font-size: 14px;
+    font-family: monospace;
+    min-height: 18px;
+    word-break: break-all;
+}
+.main-display {
+    color: #ffffff;
+    font-size: 34px;
+    font-weight: 600;
+    font-family: monospace;
+    word-break: break-all;
+    max-height: 45px;
+    overflow: hidden;
+}
+.keypad-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+button {
+    width: 100%;
+    height: 52px;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: 600;
+    background-color: #1e2433;
+    color: #f3f4f6;
+    border: none;
+    cursor: pointer;
+    transition: background 0.1s, transform 0.05s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-tap-highlight-color: transparent;
+}
+button:active {
+    transform: scale(0.96);
+    background-color: #272f42;
+}
+.btn-operator {
+    background-color: #2563eb;
+    color: #ffffff;
+}
+.btn-operator:active {
+    background-color: #1d4ed8;
+}
+.btn-utility {
+    background-color: #2e374a;
+    color: #cbd5e1;
+}
+.btn-utility:active {
+    background-color: #3d4961;
+}
+.devhub-footer {
+    text-align: center;
+    margin-top: 18px;
+    color: #4b5563;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+</style>
+</head>
+<body>
 
-# Outer UI Wrapper Init
-st.markdown('<div class="calc-box">', unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center; color: #ffffff; margin-bottom: 2px;'>Smart Calculator</h3>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #64748b; font-size: 12px; margin-bottom: 18px;'>Zyan Studio Premium Suite</p>", unsafe_allow_html=True)
+<div class="calc-container">
+    <div class="brand-title">Standard Engine</div>
+    <div class="brand-sub">Modern Precision System</div>
+    
+    <div class="display-wrapper">
+        <div class="history-display" id="history"></div>
+        <div class="main-display" id="output">0</div>
+    </div>
+    
+    <div class="keypad-grid">
+        <button class="btn-utility" onclick="action('C')">C</button>
+        <button class="btn-utility" onclick="action('back')">⌫</button>
+        <button class="btn-utility" onclick="action('%')">%</button>
+        <button class="btn-operator" onclick="action('/')">÷</button>
+        
+        <button onclick="action('7')">7</button>
+        <button onclick="action('8')">8</button>
+        <button onclick="action('9')">9</button>
+        <button class="btn-operator" onclick="action('*')">×</button>
+        
+        <button onclick="action('4')">4</button>
+        <button onclick="action('5')">5</button>
+        <button onclick="action('6')">6</button>
+        <button class="btn-operator" onclick="action('-')">−</button>
+        
+        <button onclick="action('1')">1</button>
+        <button onclick="action('2')">2</button>
+        <button onclick="action('3')">3</button>
+        <button class="btn-operator" onclick="action('+')">+</button>
+        
+        <button onclick="action('.')">.</button>
+        <button onclick="action('0')">0</button>
+        <button style="grid-column: span 2;" class="btn-operator" onclick="action('=')">=</button>
+    </div>
+    
+    <div class="devhub-footer">CREATED BY DEV HUB</div>
+</div>
 
-if 'expr' not in st.session_state:
-    st.session_state.expr = ""
+<script>
+let currentInput = "";
+let arithmeticExpression = "";
 
-# Dynamic Input Box Screen
-st.text_input("Display", value=st.session_state.expr if st.session_state.expr else "0", disabled=True, label_visibility="collapsed")
-st.write("") 
+const outputScreen = document.getElementById('output');
+const historyScreen = document.getElementById('history');
 
-# Strict Row Matrix Framework
-r1 = st.columns(4)
-r2 = st.columns(4)
-r3 = st.columns(4)
-r4 = st.columns(4)
+function formatDisplay(expr) {
+    return expr.replace(/\*/g, ' × ').replace(/\//g, ' ÷ ').replace(/\+/g, ' + ').replace(/-/g, ' − ');
+}
 
-# Row 1 Mapping
-with r1[0]:
-    st.markdown('<div class="util-btn">', unsafe_allow_html=True)
-    if st.button("C", key="c1"): st.session_state.expr = ""; st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
-with r1[1]:
-    st.markdown('<div class="util-btn">', unsafe_allow_html=True)
-    if st.button(".", key="d1"): st.session_state.expr += "."; st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
-with r1[2]:
-    st.markdown('<div class="util-btn">', unsafe_allow_html=True)
-    if st.button("%", key="p1"): st.session_state.expr += "/100"; st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
-with r1[3]:
-    st.markdown('<div class="op-btn">', unsafe_allow_html=True)
-    if st.button("÷", key="o1"): st.session_state.expr += "/"; st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
+function action(key) {
+    if (key === 'C') {
+        currentInput = "";
+        arithmeticExpression = "";
+        outputScreen.innerText = "0";
+        historyScreen.innerText = "";
+    } 
+    else if (key === 'back') {
+        if (arithmeticExpression.length > 0) {
+            arithmeticExpression = arithmeticExpression.slice(0, -1);
+            outputScreen.innerText = formatDisplay(arithmeticExpression) || "0";
+        }
+    } 
+    else if (key === '=') {
+        if (arithmeticExpression) {
+            try {
+                let cleanExpression = arithmeticExpression;
+                let evaluation = eval(cleanExpression);
+                
+                // Keep clean floating point results without long tail decimals
+                let result = Number(evaluation.toFixed(6)).toString();
+                
+                historyScreen.innerText = formatDisplay(arithmeticExpression) + " =";
+                outputScreen.innerText = result;
+                arithmeticExpression = result; // preserve state for multi-step math
+            } catch (e) {
+                outputScreen.innerText = "Error";
+                arithmeticExpression = "";
+            }
+        }
+    } 
+    else if (key === '%') {
+        if (arithmeticExpression) {
+            try {
+                let evaluation = eval(arithmeticExpression) / 100;
+                outputScreen.innerText = Number(evaluation.toFixed(6)).toString();
+                arithmeticExpression = evaluation.toString();
+            } catch(e) {
+                outputScreen.innerText = "Error";
+            }
+        }
+    } 
+    else {
+        // Prevent duplicate consecutive operation anomalies
+        const operators = ['+', '-', '*', '/'];
+        if (operators.includes(key) && operators.includes(arithmeticExpression.slice(-1))) {
+            arithmeticExpression = arithmeticExpression.slice(0, -1) + key;
+        } else {
+            arithmeticExpression += key;
+        }
+        outputScreen.innerText = formatDisplay(arithmeticExpression);
+    }
+}
+</script>
 
-# Row 2 Mapping
-with r2[0]:
-    if st.button("7", key="b7"): st.session_state.expr += "7"; st.rerun()
-with r2[1]:
-    if st.button("8", key="b8"): st.session_state.expr += "8"; st.rerun()
-with r2[2]:
-    if st.button("9", key="b9"): st.session_state.expr += "9"; st.rerun()
-with r2[3]:
-    st.markdown('<div class="op-btn">', unsafe_allow_html=True)
-    if st.button("×", key="o2"): st.session_state.expr += "*"; st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
+</body>
+</html>
+"""
 
-# Row 3 Mapping
-with r3[0]:
-    if st.button("4", key="b4"): st.session_state.expr += "4"; st.rerun()
-with r3[1]:
-    if st.button("5", key="b5"): st.session_state.expr += "5"; st.rerun()
-with r3[2]:
-    if st.button("6", key="b6"): st.session_state.expr += "6"; st.rerun()
-with r3[3]:
-    st.markdown('<div class="op-btn">', unsafe_allow_html=True)
-    if st.button("-", key="o3"): st.session_state.expr += "-"; st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# Row 4 Mapping
-with r4[0]:
-    if st.button("1", key="b1"): st.session_state.expr += "1"; st.rerun()
-with r4[1]:
-    if st.button("2", key="b2"): st.session_state.expr += "2"; st.rerun()
-with r4[2]:
-    if st.button("3", key="b3"): st.session_state.expr += "3"; st.rerun()
-with r4[3]:
-    st.markdown('<div class="op-btn">', unsafe_allow_html=True)
-    if st.button("+", key="o4"): st.session_state.expr += "+"; st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# Final Execution Alignment Block (Row 5 - Bottom Extended Keys)
-r5 = st.columns([2, 2])
-with r5[0]:
-    if st.button("0", key="b0"): st.session_state.expr += "0"; st.rerun()
-with r5[1]:
-    st.markdown('<div class="op-btn">', unsafe_allow_html=True)
-    if st.button("=", key="o5"):
-        if st.session_state.expr:
-            try:
-                st.session_state.expr = str(round(eval(st.session_state.expr), 4))
-            except ZeroDivisionError:
-                st.session_state.expr = "Cannot divide by 0"
-            except Exception:
-                st.session_state.expr = "Error"
-        st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
-
-st.markdown('</div>', unsafe_allow_html=True)
+# Embed locked canvas into Streamlit ecosystem
+components.html(calculator_canvas, height=490, scrolling=False)
