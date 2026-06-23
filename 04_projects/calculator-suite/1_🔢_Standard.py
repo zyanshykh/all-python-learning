@@ -9,6 +9,23 @@ def apply_style():
         <style>
         /* Mobile aur Desktop ke liye common container */
         .block-container { max-width: 450px !important; padding: 1rem !important; }
+                /* Input Box Styling - Fix */
+        .stTextInput>div>div>input {
+            font-size: 32px !important;
+            text-align: right !important;
+            height: 80px !important; /* Thodi height badha di taake text saaf dikhe */
+            padding-right: 20px !important;
+            background-color: #1a1a1a !important;
+            color: #ffffff !important;
+            border: 2px solid #333 !important;
+            border-radius: 12px !important;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3) !important;
+        }
+
+        /* Label ko hide rakho taake UI saaf rahe */
+        div[data-testid="stTextInput"] label {
+            display: none !important;
+        }
         
         /* Input Box Styling */
         .stTextInput>div>div>input {
