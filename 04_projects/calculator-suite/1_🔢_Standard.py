@@ -69,7 +69,7 @@ if user_typed != st.session_state.expr:
 
 # 5. Responsive Grid (Buttons)
 buttons = [
-    ["C", ".", "%", "/"],
+    ["Clear", ".", "%", "/"],
     ["7", "8", "9", "*"],
     ["4", "5", "6", "-"],
     ["1", "2", "3", "+"],
