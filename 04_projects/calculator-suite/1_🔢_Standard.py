@@ -20,6 +20,7 @@ def apply_style():
         
         /* Input box ko force full width */
         .stTextInput {
+            text-align: center;
             width: 100% !important;
         }
         
@@ -81,7 +82,7 @@ for row in buttons:
     cols = st.columns(len(row))
     for i, btn in enumerate(row):
         if cols[i].button(btn, use_container_width=True):
-            if btn == "C": st.session_state.expr = ""
+            if btn == "Clear": st.session_state.expr = ""
             elif btn == "=":
                 try: st.session_state.expr = str(round(eval(st.session_state.expr), 4))
                 except: st.session_state.expr = "Error"
