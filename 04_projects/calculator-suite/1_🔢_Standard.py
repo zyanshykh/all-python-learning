@@ -5,65 +5,10 @@ st.set_page_config(page_title="Dev Hub | Calculator", page_icon="🧮", layout="
 
 # 2. Modern & Responsive CSS
 def apply_style():
-    st.markdown("""
-        <style>
-        /* Mobile aur Desktop ke liye common container */
-        .block-container { max-width: 500px !important; padding: 2rem !important; }
-                /* Input Box Styling - Fix */
-        .stTextInput>div>div>input {
-            font-size: 32px !important;
-            text-align: right !important;
-            height: 80px !important; /* Thodi height badha di taake text saaf dikhe */
-            padding-right: 20px !important;
-            background-color: #1a1a1a !important;
-            color: #ffffff !important;
-            border: 2px solid #333 !important;
-            border-radius: 12px !important;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3) !important;
-        }
-
-        /* Label ko hide rakho taake UI saaf rahe */
-        div[data-testid="stTextInput"] label {
-            display: none !important;
-        }
-        
-        /* Input Box Styling */
-        .stTextInput>div>div>input {
-            font-size: 32px !important;
-            text-align: right !important;
-            height: 70px !important;
-            background-color: #1e1e1e !important;
-            border-radius: 10px !important;
-        }
-                /* Sabhi input boxes ko ek jaisa aur clean banane ke liye */
-    div[data-testid="stTextInput"] > div > div > input {
-        text-align: right !important;
-        background-color: #1a1a1a !important;
-        color: white !important;
-        border: 1px solid #444 !important;
-        border-radius: 8px !important;
-    }
-    
-    /* Plus/Minus buttons ko hatane ka CSS hack */
-    div[data-testid="stNumberInput"] button {
-        display: none !important;
-    }
-
-        /* Buttons responsive design */
-        div.stButton > button {
-            height: 65px !important;
-            font-size: 22px !important;
-            border-radius: 12px !important;
-            transition: 0.3s !important;
-            border: 1px solid #333 !important;
-        }
-        
-        div.stButton > button:hover { border-color: #00ffa3 !important; }
-        
-        /* Footer Branding */
-        .footer { text-align: center; color: #555; margin-top: 30px; font-size: 13px; }
-        </style>
-    """, unsafe_allow_html=True)
+    .block-container { 
+    max-width: 500px !important; /* Thoda badha diya */
+    padding: 2rem !important; 
+}
 
 apply_style()
 
