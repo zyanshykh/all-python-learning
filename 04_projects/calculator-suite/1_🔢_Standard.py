@@ -25,6 +25,29 @@ st.markdown("""
 
 st.title("🔢 Standard Calculator")
 
+# 1. Session State mein history initialize karo (Upar kahi rakho)
+if "history" not in st.session_state:
+    st.session_state.history = []
+
+# 2. Jab Calculation ho jaye (Inside your "=" button logic)
+if st.button("="):
+    try:
+        result = str(round(eval(st.session_state.expr), 4))
+        # History mein add karo
+        entry = f"{st.session_state.expr} = {result}"
+        st.session_state.history.append(entry)
+        st.session_state.expr = result
+    except:
+        st.session_state.expr = "Error"
+
+# 3. History UI Display (Sidebar ya niche show karo)
+if st.sidebar.button("Clear History"):
+    st.session_state.history = []
+
+st.sidebar.subheader("History")
+for item in reversed(st.session_state.history): # Latest history upar dikhe
+    st.sidebar.text(item)
+
 # 2. State Initialization
 if "expr" not in st.session_state: st.session_state.expr = ""
 
