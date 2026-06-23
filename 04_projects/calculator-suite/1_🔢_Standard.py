@@ -3,15 +3,35 @@ import streamlit as st
 # 1. Page Config
 st.set_page_config(page_title="Dev Hub | Calculator", page_icon="🧮", layout="centered")
 
-# 2. Modern Styling (CSS)
+# 2. Modern & Responsive CSS
 def apply_style():
     st.markdown("""
         <style>
-        .block-container { max-width: 450px !important; }
-        div.stButton > button { height: 60px !important; font-size: 20px !important; border-radius: 12px !important; border: 1px solid #444 !important; }
-        .stTextInput>div>div>input { font-size: 32px !important; text-align: right !important; font-family: monospace !important; background: #1a1a1a !important; }
-        footer {visibility: hidden;} /* Streamlit default footer hide */
-        .footer { position: fixed; left: 0; bottom: 0; width: 100%; text-align: center; padding: 10px; background-color: transparent; color: #888; font-size: 12px; }
+        /* Mobile aur Desktop ke liye common container */
+        .block-container { max-width: 450px !important; padding: 1rem !important; }
+        
+        /* Input Box Styling */
+        .stTextInput>div>div>input {
+            font-size: 32px !important;
+            text-align: right !important;
+            height: 70px !important;
+            background-color: #1e1e1e !important;
+            border-radius: 10px !important;
+        }
+
+        /* Buttons responsive design */
+        div.stButton > button {
+            height: 65px !important;
+            font-size: 22px !important;
+            border-radius: 12px !important;
+            transition: 0.3s !important;
+            border: 1px solid #333 !important;
+        }
+        
+        div.stButton > button:hover { border-color: #00ffa3 !important; }
+        
+        /* Footer Branding */
+        .footer { text-align: center; color: #555; margin-top: 30px; font-size: 13px; }
         </style>
     """, unsafe_allow_html=True)
 
@@ -19,17 +39,17 @@ apply_style()
 
 # 3. Branding Header
 st.title("🔢 Smart Calculator")
-st.caption("Dev Hub | Ecosystem Mode v1.1")
+st.caption("Dev Hub | Ecosystem Mode")
 
-# 4. Calculator Logic
+# 4. App Logic
 if "expr" not in st.session_state: st.session_state.expr = ""
 
-user_typed = st.text_input("Input", value=st.session_state.expr, placeholder="0", label_visibility="collapsed")
+user_typed = st.text_input("Input", value=st.session_state.expr, label_visibility="collapsed")
 if user_typed != st.session_state.expr:
     st.session_state.expr = user_typed
     st.rerun()
 
-# Responsive Grid
+# 5. Responsive Grid (Buttons)
 buttons = [
     ["C", ".", "%", "/"],
     ["7", "8", "9", "*"],
@@ -39,6 +59,7 @@ buttons = [
 ]
 
 for row in buttons:
+    # Column layout screen ke hisaab se adjust hoga
     cols = st.columns(len(row))
     for i, btn in enumerate(row):
         if cols[i].button(btn, use_container_width=True):
@@ -49,11 +70,9 @@ for row in buttons:
             else: st.session_state.expr += btn
             st.rerun()
 
-# 5. Modern Footer (Branding)
+# 6. Professional Footer
 st.markdown("""
     <div class="footer">
-        <hr>
-        Dev Hub | © 2026 Ecosystem Analytics<br>
-        Powered by Zayyan Studio
+        Dev Hub Ecosystem | Professional Grade Tool
     </div>
 """, unsafe_allow_html=True)
