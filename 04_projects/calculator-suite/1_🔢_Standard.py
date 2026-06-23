@@ -36,6 +36,17 @@ def apply_style():
             padding: 0 !important;
             width: 100% !important;
         }
+        footer {visibility: hidden !important;}
+        
+        /* Agar tum apna khud ka branding footer dikhana chahte ho, 
+           toh neeche uska style hoga */
+        .footer { 
+            text-align: center; 
+            color: #888; 
+            font-size: 12px; 
+            margin-top: 20px; 
+        }        
+                
         
         /* Mobile par Manage App button ko hide ya adjust karna */
         #vg-button { display: none !important; }
