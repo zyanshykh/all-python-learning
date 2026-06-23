@@ -19,4 +19,5 @@ def add_footer():
             <hr>
             Dev Hub Ecosystem | © 2026 Analytics
         </div>
+                
     """, unsafe_allow_html=True)

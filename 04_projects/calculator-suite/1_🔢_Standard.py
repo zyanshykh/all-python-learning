@@ -90,11 +90,4 @@ for row in buttons:
             else: st.session_state.expr += btn
             st.rerun()
 
-# 6. Professional Footer
-st.markdown("""
-    <div class="footer">
-        Dev Hub Ecosystem | Professional Grade Tool
-    </div>
-""", unsafe_allow_html=True)
-
 add_footer()
