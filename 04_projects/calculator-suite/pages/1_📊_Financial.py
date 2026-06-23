@@ -1,5 +1,19 @@
 import streamlit as st
 
+# --- YEH HAI INTEGRATION ---
+from modules.finance_logic import calculate_emi 
+
+st.title("📊 Financial Calculator")
+
+p_input = st.text_input("Principal Amount", value="50000")
+# ... baki inputs ...
+
+if st.button("Calculate"):
+    # Yahan humne function ko call kiya, logic bahar se aaya!
+    emi, total, interest = calculate_emi(float(p_input), 5, 7.5) 
+    
+    st.success(f"Monthly EMI: {emi:,.2f}")
+
 st.set_page_config(page_title="Financial Analytics", page_icon="📊", layout="centered")
 
 st.sidebar.markdown("# ⚙️ Main Menu")
