@@ -1,5 +1,6 @@
 import streamlit as st
 from modules.converter_logic import convert_length, convert_weight, convert_temp
+from modules.ui_components import add_footer
 
 st.title("📐 Smart Unit Converter")
 category = st.selectbox("Select Category", ["Length", "Weight", "Temperature"])
@@ -29,3 +30,6 @@ elif category == "Temperature":
     if st.button("Convert"):
         res = convert_temp(float(val_input), from_u, to_u)
         st.success(f"Result: {res:.2f} {to_u}")
+
+add_footer()
+

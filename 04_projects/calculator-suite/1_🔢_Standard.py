@@ -1,4 +1,5 @@
 import streamlit as st
+from modules.ui_components import add_footer
 
 # Page Config
 st.set_page_config(
@@ -95,3 +96,5 @@ st.markdown("""
         Dev Hub Ecosystem | Professional Grade Tool
     </div>
 """, unsafe_allow_html=True)
+
+add_footer()

@@ -1,5 +1,6 @@
 import streamlit as st
 from modules.finance_logic import calculate_emi, calculate_ci 
+from modules.ui_components import add_footer
 
 st.title("📊 Financial Calculator")
 st.markdown("---")
@@ -36,3 +37,6 @@ with tab2:
             st.metric("Total Interest Earned", f"${interest:,.2f}")
         except ValueError:
             st.error("Invalid Input")
+
+            
+add_footer()
