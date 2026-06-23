@@ -1,14 +1,42 @@
 import streamlit as st
 
-# 1. Page Config
-st.set_page_config(page_title="Dev Hub | Calculator", page_icon="🧮", layout="centered")
+# Page Config
+st.set_page_config(
+    page_title="Dev Hub | Calculator", 
+    page_icon="🧮", 
+    layout="centered",
+    initial_sidebar_state="collapsed" # Sidebar band rahega
+)
 
-# 2. Modern & Responsive CSS
+# CSS Function
 def apply_style():
-    .block-container { 
-    max-width: 500px !important; /* Thoda badha diya */
-    padding: 2rem !important; 
-}
+    st.markdown("""
+        <style>
+        /* Container width fix */
+        .block-container { 
+            max-width: 500px !important; 
+            padding-top: 1rem !important; 
+        }
+
+        /* Input Box */
+        .stTextInput > div > div > input {
+            font-size: 32px !important;
+            text-align: right !important;
+            height: 70px !important;
+            background-color: #1a1a1a !important;
+            border: 2px solid #333 !important;
+            border-radius: 10px !important;
+            width: 100% !important;
+        }
+
+        /* Buttons */
+        div.stButton > button {
+            height: 60px !important;
+            font-size: 20px !important;
+            border-radius: 10px !important;
+        }
+        </style>
+    """, unsafe_allow_html=True)
 
 apply_style()
 
