@@ -5,36 +5,40 @@ st.set_page_config(
     page_title="Dev Hub | Calculator", 
     page_icon="🧮", 
     layout="centered",
-    initial_sidebar_state="collapsed" # Sidebar band rahega
+    initial_sidebar_state="collapsed" 
 )
 
 # CSS Function
 def apply_style():
     st.markdown("""
         <style>
-        /* Container width fix */
+        /* Container ko full width dene ke liye */
         .block-container { 
-            max-width: 500px !important; 
-            padding-top: 1rem !important; 
+            max-width: 100% !important; 
+            padding: 0.5rem !important; 
         }
-
-        /* Input Box */
+        
+        /* Input box ko force full width */
+        .stTextInput {
+            width: 100% !important;
+        }
+        
         .stTextInput > div > div > input {
-            font-size: 32px !important;
-            text-align: right !important;
-            height: 70px !important;
-            background-color: #1a1a1a !important;
-            border: 2px solid #333 !important;
-            border-radius: 10px !important;
+            font-size: 24px !important;
+            height: 60px !important;
             width: 100% !important;
         }
 
-        /* Buttons */
+        /* Buttons ko screen mein fit karne ke liye */
         div.stButton > button {
-            height: 60px !important;
-            font-size: 20px !important;
-            border-radius: 10px !important;
+            height: 50px !important;
+            font-size: 18px !important;
+            padding: 0 !important;
+            width: 100% !important;
         }
+        
+        /* Mobile par Manage App button ko hide ya adjust karna */
+        #vg-button { display: none !important; }
         </style>
     """, unsafe_allow_html=True)
 
