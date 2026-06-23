@@ -1,24 +1,7 @@
 import streamlit as st
+from modules.finance_logic import calculate_emi  # YE IMPORT ZAROORI HAI
 
-# --- YEH HAI INTEGRATION ---
-from modules.finance_logic import calculate_emi 
-
-st.title("📊 Financial Calculator")
-
-p_input = st.text_input("Principal Amount", value="50000")
-# ... baki inputs ...
-
-if st.button("Calculate"):
-    # Yahan humne function ko call kiya, logic bahar se aaya!
-    emi, total, interest = calculate_emi(float(p_input), 5, 7.5) 
-    
-    st.success(f"Monthly EMI: {emi:,.2f}")
-
-st.set_page_config(page_title="Financial Analytics", page_icon="📊", layout="centered")
-
-st.sidebar.markdown("# ⚙️ Main Menu")
-st.sidebar.markdown("---")
-
+# Page Config sirf main file mein hona chahiye, yahan se hata do
 st.title("📊 Financial Calculator")
 st.markdown("---")
 
@@ -26,21 +9,25 @@ tab1, tab2 = st.tabs(["💰 Loan EMI Calculator", "📈 Compound Interest"])
 
 with tab1:
     st.subheader("Calculate Monthly Loan EMI")
-    principal = st.number_input("Principal Amount ($/Rs)", min_value=1000, value=50000, step=1000)
+    # Text input for flexibility
+    p_input = st.text_input("Principal Amount ($)", value="50000")
     tenure_years = st.slider("Loan Tenure (Years)", min_value=1, max_value=30, value=5)
     interest_rate = st.number_input("Annual Interest Rate (%)", min_value=0.5, max_value=25.0, value=7.5, step=0.1)
 
     if st.button("Calculate EMI", key="emi_btn"):
-        r = (interest_rate / 12) / 100
-        n = tenure_years * 12
-        emi = (principal * r * (1 + r)**n) / ((1 + r)**n - 1)
-        total_payment = emi * n
-        total_interest = total_payment - principal
-        
-        st.success(f"Monthly EMI: **${emi:,.2f}**")
-        c1, c2 = st.columns(2)
-        c1.metric("Total Interest", f"${total_interest:,.2f}")
-        c2.metric("Total Payable Amount", f"${total_payment:,.2f}")
+        try:
+            # Type conversion zaroori hai
+            p_val = float(p_input)
+            
+            # Function call (Logic yahan se trigger hoga)
+            emi, total_payment, total_interest = calculate_emi(p_val, tenure_years, interest_rate)
+            
+            st.success(f"Monthly EMI: **${emi:,.2f}**")
+            c1, c2 = st.columns(2)
+            c1.metric("Total Interest", f"${total_interest:,.2f}")
+            c2.metric("Total Payable Amount", f"${total_payment:,.2f}")
+        except ValueError:
+            st.error("Please enter a valid Principal Amount")
 
 with tab2:
     st.subheader("Compound Interest Calculator")
