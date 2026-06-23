@@ -8,7 +8,7 @@ def apply_style():
     st.markdown("""
         <style>
         /* Mobile aur Desktop ke liye common container */
-        .block-container { max-width: 450px !important; padding: 1rem !important; }
+        .block-container { max-width: 500px !important; padding: 2rem !important; }
                 /* Input Box Styling - Fix */
         .stTextInput>div>div>input {
             font-size: 32px !important;
