@@ -34,7 +34,7 @@ st.caption("Dev Hub | Ecosystem Mode")
 if "expr" not in st.session_state:
     st.session_state.expr = ""
 
-user_typed = st.text_input("Input", value=st.session_state.expr, label_visibility="collapsed")
+user_typed = st.text_input("Input", value=st.session_state.expr, placeholder="Type here...", label_visibility="collapsed")
 
 if user_typed != st.session_state.expr:
     st.session_state.expr = user_typed
