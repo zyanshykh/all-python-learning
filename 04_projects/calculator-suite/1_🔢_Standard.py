@@ -30,7 +30,7 @@ if "history" not in st.session_state:
     st.session_state.history = []
 
 # 2. Jab Calculation ho jaye (Inside your "=" button logic)
-if st.button("="):
+if st.button("Enter"):
     try:
         result = str(round(eval(st.session_state.expr), 4))
         # History mein add karo
