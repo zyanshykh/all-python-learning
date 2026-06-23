@@ -35,6 +35,19 @@ def apply_style():
             background-color: #1e1e1e !important;
             border-radius: 10px !important;
         }
+                /* Sabhi input boxes ko ek jaisa aur clean banane ke liye */
+    div[data-testid="stTextInput"] > div > div > input {
+        text-align: right !important;
+        background-color: #1a1a1a !important;
+        color: white !important;
+        border: 1px solid #444 !important;
+        border-radius: 8px !important;
+    }
+    
+    /* Plus/Minus buttons ko hatane ka CSS hack */
+    div[data-testid="stNumberInput"] button {
+        display: none !important;
+    }
 
         /* Buttons responsive design */
         div.stButton > button {
