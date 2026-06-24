@@ -4,24 +4,26 @@ from modules.ui_components import add_footer
 # Page Config
 st.set_page_config(page_title="Dev Hub | Calculator", page_icon="🧮", layout="centered", initial_sidebar_state="collapsed")
 
-# 1. Custom Styling (Modern & Clean)
-st.markdown("""
-    <style>
-    .block-container { padding-top: 1rem !important; }
-    /* Standardized Input Box */
-    .stTextInput > div > div > input {
-        font-size: 24px !important;
-        height: 60px !important;
-        text-align: right !important;
-    }
-    /* Standardized Buttons */
-    div.stButton > button {
-        height: 50px !important;
-        font-weight: bold !important;
-        border-radius: 8px !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
+def apply_style():
+    st.markdown("""
+        <style>
+        /* Mobile aur Desktop ke liye force full width */
+        .block-container { max-width: 500px !important; padding: 1rem !important; }
+        
+        /* Buttons ka size fix karo */
+        div.stButton > button {
+            width: 100% !important; 
+            height: 50px !important;
+            margin: 2px !important;
+        }
+        
+        /* Input Box ka style */
+        .stTextInput > div > div > input {
+            text-align: right !important;
+            font-size: 24px !important;
+        }
+        </style>
+    """, unsafe_allow_html=True)
 
 st.title("🔢 Standard Calculator")
 
@@ -53,6 +55,7 @@ if "expr" not in st.session_state: st.session_state.expr = ""
 
 # 3. UI Display (Using Text Input like other pages)
 user_typed = st.text_input("Calculator Input", value=st.session_state.expr, label_visibility="hidden")
+user_typed = st.text_input("Input", value=st.session_state.expr, placeholder="0", label_visibility="collapsed",key="calc_input")
 
 # 4. Modern Button Grid
 btn_rows = [
