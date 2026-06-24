@@ -1,5 +1,5 @@
 import streamlit as st
-from modules.finance_logic import calculate_emi, calculate_ci 
+from modules.finance_logic import calculate_ci 
 from modules.ui_components import add_footer
 
 st.set_page_config(initial_sidebar_state="collapsed") # Fast load ke liye
@@ -10,6 +10,7 @@ st.markdown("---")
 # Fragment 1: EMI Calculation
 @st.fragment
 def emi_tab():
+    from modules.finance_logic import calculate_emi  
     p_input = st.text_input("Principal Amount ($)", value="50000")
     tenure_years = st.slider("Loan Tenure (Years)", min_value=1, max_value=30, value=5)
     interest_rate = st.number_input("Annual Interest Rate (%)", min_value=0.5, max_value=25.0, value=7.5, step=0.1)
