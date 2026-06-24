@@ -5,13 +5,7 @@ from modules.ui_components import add_footer
 st.set_page_config(page_title="Dev Hub | Calculator", page_icon="🧮", layout="centered", initial_sidebar_state="collapsed")
 
 # Styling (Minimize redundant calls)
-st.markdown("""
-    <style>
-    .block-container { max-width: 500px !important; padding: 1rem !important; }
-    div.stButton > button { width: 100% !important; height: 50px !important; font-size: 18px !important; }
-    .stTextInput > div > div > input { text-align: right !important; font-size: 32px !important; font-weight: bold !important; color: #00ffa3 !important; }
-    </style>
-""", unsafe_allow_html=True)
+st.markdown("""<style>.block-container { max-width: 500px !important; padding: 1rem !important; } div.stButton > button { width: 100% !important; height: 50px !important; font-size: 18px !important; } .stTextInput > div > div > input { text-align: right !important; font-size: 32px !important; font-weight: bold !important; color: #00ffa3 !important; }</style>""", unsafe_allow_html=True)
 
 st.title("🔢 Standard Calculator")
 

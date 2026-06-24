@@ -21,3 +21,7 @@ def add_footer():
         </div>
                 
     """, unsafe_allow_html=True)
+
+@st.cache_resource # Yeh line UI components ko memory mein store rakhegi
+def add_footer():
+    st.markdown("""...""", unsafe_allow_html=True)
