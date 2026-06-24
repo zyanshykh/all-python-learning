@@ -54,7 +54,7 @@ for item in reversed(st.session_state.history): # Latest history upar dikhe
 if "expr" not in st.session_state: st.session_state.expr = ""
 
 # 3. UI Display (Using Text Input like other pages)
-user_typed = st.text_input("Calculator Input", value=st.session_state.expr, label_visibility="hidden")
+
 user_typed = st.text_input("Input", value=st.session_state.expr, placeholder="0", label_visibility="collapsed",key="calc_input")
 
 # 4. Modern Button Grid
