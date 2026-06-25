@@ -26,7 +26,7 @@ Make sure you have Python installed (Python 3.10+ recommended). You can check yo
 python --version
 ```
 ---
-##Installation & Setup
+## Installation & Setup
 Clone the repository
 
 ```git clone [https://github.com/zyanshykh/all-python-learning.git](https://github.com/zyanshykh/all-python-learning.git)```
