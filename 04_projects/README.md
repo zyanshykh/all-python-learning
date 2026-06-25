@@ -25,7 +25,7 @@ Make sure you have Python installed (Python 3.10+ recommended). You can check yo
 ```bash
 python --version
 ```
-'''
+---
 ##Installation & Setup
 Clone the repository
 
@@ -39,4 +39,6 @@ cd all-python-learning
 
 python -m venv venv
 source venv/bin/bin/activate  # On Windows use: venv\Scripts\activate
+
+---
 
