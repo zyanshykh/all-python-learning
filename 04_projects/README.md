@@ -32,13 +32,14 @@ Clone the repository
 ```git clone [https://github.com/zyanshykh/all-python-learning.git](https://github.com/zyanshykh/all-python-learning.git)```
 
 ## Navigate to the project directory:
-
+```
 cd all-python-learning
-
+```
 **(Optional) Create a virtual environment:**
-
+```
 python -m venv venv
-source venv/bin/bin/activate  # On Windows use: venv\Scripts\activate
-
+source venv/bin/bin/activate  # On Windows use:
+venv\Scripts\activate
+```
 ---
 
