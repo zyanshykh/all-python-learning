@@ -19,14 +19,14 @@ python 01_smart_start.py
 ```
 
 ##📝 Topics Covered
-"""
-1.Basic Syntax & Comments
 
-2.Variables & Data Types
+* 1.Basic Syntax & Comments
 
-3.Python Operators (Arithmetic, Logical, Relational)
+* 2.Variables & Data Types
 
-3.Writing your first script
+* 3.Python Operators (Arithmetic, Logical, Relational)
+
+* 3.Writing your first script
 
 Happy Coding! 💻
-"""
+
