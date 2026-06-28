@@ -18,7 +18,7 @@ Make sure you have Python installed. You can run any file using your terminal:
 python 01_smart_start.py
 ```
 
-##📝 Topics Covered
+## 📝 Topics Covered
 
 * 1.Basic Syntax & Comments
 
